@@ -20,11 +20,9 @@ env:
     # Note: TWINE_PASSWORD is set in Travis settings
 
 script:
-  - $PIP install cibuildwheel setuptools_rust
+  - $PIP install cibuildwheel setuptools_rust twine
   - export CIBW_BUILD='cp37-*'
   - export CIBW_BEFORE_BUILD='bash {project}/dist/before_ci.sh'
   - export CIBW_ENVIRONMENT='PATH="$HOME/.cargo/bin:$PATH"'
   - cibuildwheel --output-dir wheelhouse
-  - |
-    $PIP install twine
-    $PYTHON -m twine upload --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl
+  - $PYTHON -m twine upload --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl
